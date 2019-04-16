@@ -64,7 +64,7 @@ async def weer(ctx, *, msg=None):
 		embed.add_field(name="Relatieve luchtvochtigheid", value=luchtvochtigheid + ' %', inline=False)
 		embed.add_field(name="Temperatuur", value=temperatuur, inline=False)
 
-		embed.set_footer(text='Gevraagd door ' + ctx.message.author.name)
+		embed.set_footer(text='Gevraagd door ' + ctx.message.author.display_name)
 		await bot.say(embed=embed)
 
 
