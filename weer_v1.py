@@ -49,7 +49,7 @@ async def weer(ctx, *, msg=None):
 
 		windsnelheid, luchtvochtigheid, temperatuur = m.group(1), m.group(2), m.group(3)
 
-		embed = discord.Embed(title="Weerbericht",
+		embed = discord.Embed(title='Weerbericht',
 							  color=randint(0, 0xffffff),
 							  description='Het weer in ' + msg)
 
@@ -60,9 +60,9 @@ async def weer(ctx, *, msg=None):
 			avatar_url = ctx.message.author.default_avatar_url
 		embed.set_thumbnail(url=avatar_url)
 
-		embed.add_field(name="Gemiddelde windsnelheid", value=windsnelheid + ' km/h', inline=False)
-		embed.add_field(name="Relatieve luchtvochtigheid", value=luchtvochtigheid + ' %', inline=False)
-		embed.add_field(name="Temperatuur", value=temperatuur, inline=False)
+		embed.add_field(name='Gemiddelde windsnelheid', value=windsnelheid + ' km/h', inline=False)
+		embed.add_field(name='Relatieve luchtvochtigheid', value=luchtvochtigheid + ' %', inline=False)
+		embed.add_field(name='Temperatuur', value=temperatuur, inline=False)
 
 		embed.set_footer(text='Gevraagd door ' + ctx.message.author.display_name)
 		await bot.say(embed=embed)
