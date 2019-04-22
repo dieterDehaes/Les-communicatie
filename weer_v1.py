@@ -55,16 +55,18 @@ async def weer(ctx, *, msg=None):
 
 		embed.set_author(name=bot.user.name, icon_url=bot.user.avatar_url)
 
-		avatar_url = ctx.message.author.avatar_url
+		msg_author = ctx.message.author
+
+		avatar_url = msg_author.avatar_url
 		if not avatar_url:
-			avatar_url = ctx.message.author.default_avatar_url
+			avatar_url = msg_author.default_avatar_url
 		embed.set_thumbnail(url=avatar_url)
 
 		embed.add_field(name='Gemiddelde windsnelheid', value=windsnelheid + ' km/h', inline=False)
 		embed.add_field(name='Relatieve luchtvochtigheid', value=luchtvochtigheid + ' %', inline=False)
 		embed.add_field(name='Temperatuur', value=temperatuur, inline=False)
 
-		embed.set_footer(text='Gevraagd door ' + ctx.message.author.display_name)
+		embed.set_footer(text='Gevraagd door ' + msg_author.display_name)
 		await bot.say(embed=embed)
 
 
