@@ -4,6 +4,7 @@ from random import randint
 import requests
 from bs4 import BeautifulSoup
 import re
+import datetime
 
 print('Discord version:', discord.__version__)
 
@@ -14,6 +15,7 @@ with open('token_test_bot.txt', 'r') as file:
 
 bot = commands.Bot(command_prefix=prefix)
 
+start_time = datetime.datetime.now()
 
 @bot.event
 async def on_ready():
@@ -37,7 +39,7 @@ async def weer(ctx, *, msg=None):
 		await bot.say('Gebruik: `!weer { ' + plaatsen_str + ' }`')
 
 	else:
-		await bot.say('Bezig...')
+		bezig = await bot.say('Bezig...')
 
 		html = requests.get(plaatsen_dict[msg]).text[15100:17500]
 
@@ -52,6 +54,7 @@ async def weer(ctx, *, msg=None):
 		embed = discord.Embed(title='Weerbericht',
 							  color=randint(0, 0xffffff),
 							  description='Het weer in ' + msg)
+		# color=discord.Color.green()
 
 		embed.set_author(name=bot.user.name, icon_url=bot.user.avatar_url)
 
@@ -65,9 +68,18 @@ async def weer(ctx, *, msg=None):
 		embed.add_field(name='Gemiddelde windsnelheid', value=windsnelheid + ' km/h', inline=False)
 		embed.add_field(name='Relatieve luchtvochtigheid', value=luchtvochtigheid + ' %', inline=False)
 		embed.add_field(name='Temperatuur', value=temperatuur, inline=False)
+		embed.add_field(name='Tijd', value=str(datetime.datetime.now().replace(microsecond=0)), inline=False)
 
 		embed.set_footer(text='Gevraagd door ' + msg_author.display_name)
+
+		await bot.delete_message(bezig)
 		await bot.say(embed=embed)
+		await bot.send_message(msg_author, embed=embed)
+
+
+@bot.command()
+async def uptime():
+	await bot.say('Uptime: ' + str(datetime.datetime.now().replace(microsecond=0) - start_time.replace(microsecond=0)))
 
 
 bot.run(token)
